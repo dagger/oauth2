@@ -260,7 +260,7 @@ func (c *Config) Poll(ctx context.Context, da *DeviceAuth, opts ...AuthCodeOptio
 	// See https://tools.ietf.org/html/draft-ietf-oauth-device-flow-07#section-3.5
 	interval := da.Interval
 	if interval == 0 {
-		interval = 5
+		interval = 1
 	}
 
 	for {
@@ -276,7 +276,7 @@ func (c *Config) Poll(ctx context.Context, da *DeviceAuth, opts ...AuthCodeOptio
 		case errAccessDenied, errExpiredToken:
 			return tok, errors.New("oauth2: " + errTyp)
 		case errSlowDown:
-			interval += 5
+			interval += 1
 			fallthrough
 		case errAuthorizationPending:
 		}
